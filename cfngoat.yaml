@@ -99,6 +99,7 @@ Resources:
           Value: jonathan.jozwiak/nimrodkor
         - Key: git_last_modified_at
           Value: "2021-08-23 13:51:41"
+      Encrypted: True
 
   ### CFN Does not Support Volume Snapshot
   EBSAttachment:
@@ -371,7 +372,11 @@ Resources:
         - Key: git_last_modified_by
           Value: nimrodkor@gmail.com
       PublicAccessBlockConfiguration:
-        RestrictPublicBuckets: True
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+      VersioningConfiguration:
+        Status: Enabled
 
   #############
   ###  IAM  ###
@@ -458,6 +463,7 @@ Resources:
           Value: cfngoat.yaml
         - Key: git_commit
           Value: 42153ba22c28f5c0bff388b24a6344137a5dfe26
+      EnableKeyRotation: True
   LogsKeyAlias:
     Type: AWS::KMS::Alias
     Properties:
@@ -487,7 +493,7 @@ Resources:
       MasterUserPassword: !Ref Password
       MultiAZ: False
       BackupRetentionPeriod: 0
-      StorageEncrypted: False
+      StorageEncrypted: true
       MonitoringInterval: 0
       PubliclyAccessible: True
       Tags:
@@ -942,8 +948,6 @@ Resources:
           Value: 509b197d-4f87-4ae1-aa43-8cca13c9e92e
         - Key: git_org
           Value: bridgecrewio
-      PublicAccessBlockConfiguration:
-        RestrictPublicBuckets: True
 
   ### TODO - Custom Upload of insecure document
   FinancialsBucket:
@@ -973,7 +977,11 @@ Resources:
         - Key: git_repo
           Value: cfngoat
       PublicAccessBlockConfiguration:
-        RestrictPublicBuckets: True
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+      VersioningConfiguration:
+        Status: Enabled
   OperationsBucket:
     # not encrypted, no access logs
     Type: AWS::S3::Bucket
@@ -1003,7 +1011,9 @@ Resources:
         - Key: yor_trace
           Value: 9e00e7c2-b27c-4141-af5a-2d90c9632a23
       PublicAccessBlockConfiguration:
-        RestrictPublicBuckets: True
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
   DataScienceBucket:
     # not encrypted
     Type: AWS::S3::Bucket
@@ -1036,7 +1046,9 @@ Resources:
         - Key: git_org
           Value: bridgecrewio
       PublicAccessBlockConfiguration:
-        RestrictPublicBuckets: True
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
   LogsBucket:
     # not encrypted
     Type: AWS::S3::Bucket
@@ -1070,8 +1082,6 @@ Resources:
           Value: "2021-08-23 13:51:41"
         - Key: git_last_modified_by
           Value: nimrodkor@gmail.com
-      PublicAccessBlockConfiguration:
-        RestrictPublicBuckets: True
 
    ########################
    ### Clean S3 Buckets ###
